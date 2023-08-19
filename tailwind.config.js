@@ -9,7 +9,8 @@ export default {
       backgroundColor: {
         bgForRadio: "#304859",
         startButton: "#FDA214",
-        menuColor: "#FDA214"
+        menuColor: "#FDA214",
+        
       },
       colors: {
         menuColor: "#7191A5",

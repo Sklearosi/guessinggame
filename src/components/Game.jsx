@@ -23,8 +23,9 @@ function Game() {
 
 
     const [firstClick, setFirstClick] = useState(null)
-   
+    const [firstClickElement, setFirstClickElement] = useState(null)
     
+    let timeOut
 
     return(
         <>
@@ -32,23 +33,35 @@ function Game() {
             <p className="font-atkinson text-3xl font-bold leading-7 tracking-normal text-left text-memoryColor">memory</p>
             <Link className=" font-bold leading-5 tracking-normal text-center w-20 h-10 bg-menuColor flex justify-center items-center rounded-3xl text-white">Menu</Link>
         </div>
-        <div className=" grid grid-cols-4 w-11/12 m-auto mt-10 gap-3">
+        <div className=" grid grid-cols-4 w-11/12 m-auto mt-36 gap-3">
            {numbers.map((number, index) => {
             return(
-                <div  className=" bg-red-600 rounded-full w-16 h-16 flex justify-center  items-center  " key={index}  onClick={(e) => {
+                <div  className="text-4xl font-bold leading-10 text-center bg-bgForRadio rounded-full w-16 h-16 flex justify-center  items-center text-transparent " key={index}  onClick={(e) => {
+
                     e.target.style.color = "white"
                     
                     if(firstClick === null) {
-                        
                         setFirstClick(e.target.textContent)
-                        console.log(firstClick);
+                        setFirstClickElement(e.target)
+                        console.log(firstClick)
+                        console.log(firstClickElement)
+                        e.target.style.pointerEvents = "none"
                     } else {
                         if(e.target.textContent === firstClick) {
-                            console.log('yessss');
+                            e.target.style.backgroundColor = "#BCCED9"
+                            firstClickElement.style.backgroundColor = "#BCCED9"
+                            e.target.style.pointerEvents = "none"
+                            firstClickElement.style.pointerEvents = "none"
                         } else {
-                            console.log('nooo');
+                            timeOut = setTimeout(() => {
+                                e.target.style.color = "transparent"
+                                firstClickElement.style.color = "transparent"
+                                e.target.style.pointerEvents = "auto"
+                                firstClickElement.style.pointerEvents = "auto"
+                            }, 1000);
                         }
                         setFirstClick(null)
+                        setFirstClickElement(null)
                     }
                 
                 }}>{number}</div>
