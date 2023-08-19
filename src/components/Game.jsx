@@ -21,9 +21,13 @@ function Game() {
        shuffleNumbers()
     }, [])
 
+  
+
 
     const [firstClick, setFirstClick] = useState(null)
     const [firstClickElement, setFirstClickElement] = useState(null)
+    const [minutes, setMinutes] = useState(2)
+    const [seconds, setSeconds] = useState(59)
     
     let timeOut
 
@@ -67,6 +71,16 @@ function Game() {
                 }}>{number}</div>
             )
            })}
+        </div>
+        <div className="flex w-11/12 m-auto mt-32 justify-evenly items-center">
+            <div className=" w-36 h-16 bg-timerMoves rounded-lg grid justify-evenly items-center text-center">
+                <p className="text-lg font-bold leading-5 text-center text-menuColor">Time</p>
+                <p className="text-3xl font-bold leading-7 text-center text-memoryColor">{minutes}:{seconds}</p>
+            </div>
+            <div className=" w-36 h-16 bg-timerMoves rounded-lg grid justify-evenly items-center text-center">
+                <p className="text-lg font-bold leading-5 text-center text-menuColor">Moves</p>
+                <p className="text-3xl font-bold leading-7 text-center text-memoryColor">50</p>
+            </div>
         </div>
         </>
     )
