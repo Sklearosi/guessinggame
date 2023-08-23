@@ -28,6 +28,25 @@ function Game() {
     const [firstClickElement, setFirstClickElement] = useState(null)
     const [minutes, setMinutes] = useState(2)
     const [seconds, setSeconds] = useState(59)
+    const [moves, setMoves] = useState(50)
+    let timer
+    useEffect(() => {
+        timer = setInterval(() => {
+            setSeconds(seconds - 1)
+            if(seconds === 0) {
+                setSeconds(59)
+                setMinutes(minutes - 1)
+            } 
+            if(minutes === 0 && seconds === 0){
+                clearInterval(timer)
+                setMinutes(0)
+                setSeconds(0)
+            }
+            
+        }, 1000);
+       
+        return ()=> clearInterval(timer)
+    })
     
     let timeOut
 
@@ -56,6 +75,7 @@ function Game() {
                             firstClickElement.style.backgroundColor = "#BCCED9"
                             e.target.style.pointerEvents = "none"
                             firstClickElement.style.pointerEvents = "none"
+                            setMoves(moves - 1)
                         } else {
                             timeOut = setTimeout(() => {
                                 e.target.style.color = "transparent"
@@ -63,6 +83,7 @@ function Game() {
                                 e.target.style.pointerEvents = "auto"
                                 firstClickElement.style.pointerEvents = "auto"
                             }, 1000);
+                            setMoves(moves - 1)
                         }
                         setFirstClick(null)
                         setFirstClickElement(null)
@@ -79,7 +100,7 @@ function Game() {
             </div>
             <div className=" w-36 h-16 bg-timerMoves rounded-lg grid justify-evenly items-center text-center">
                 <p className="text-lg font-bold leading-5 text-center text-menuColor">Moves</p>
-                <p className="text-3xl font-bold leading-7 text-center text-memoryColor">50</p>
+                <p className="text-3xl font-bold leading-7 text-center text-memoryColor">{moves}</p>
             </div>
         </div>
         </>
