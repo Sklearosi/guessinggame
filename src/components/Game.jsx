@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 
-function Game() {
+function Game({options}) {
 
-    const [numbers, setNumbers] = useState([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8])
+    const [numbers, setNumbers] = useState(options.size==="4x4" ? [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8] : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18] )
 
     const shuffleNumbers = () => {
         const shuffledNumbers = [...numbers];
@@ -56,10 +56,10 @@ function Game() {
             <p className="font-atkinson text-3xl font-bold leading-7 tracking-normal text-left text-memoryColor">memory</p>
             <Link className=" font-bold leading-5 tracking-normal text-center w-20 h-10 bg-menuColor flex justify-center items-center rounded-3xl text-white">Menu</Link>
         </div>
-        <div className=" grid grid-cols-4 w-11/12 m-auto mt-36 gap-3">
+        <div className={` grid grid-cols-4 w-11/12 m-auto mt-36 gap-3 ${options.size === '6x6' ? 'grid-cols-6' : null}`}>
            {numbers.map((number, index) => {
             return(
-                <div  className="text-4xl font-bold leading-10 text-center bg-bgForRadio rounded-full w-16 h-16 flex justify-center  items-center text-transparent " key={index}  onClick={(e) => {
+                <div  className={` font-bold leading-10 text-center bg-bgForRadio rounded-full w-16 h-16 flex justify-center  items-center text-transparent ${options.size ==="6x6" ? 'w-11 h-11 text-2xl' : 'text-4xl'} `} key={index}  onClick={(e) => {
 
                     e.target.style.color = "white"
                     
@@ -93,7 +93,7 @@ function Game() {
             )
            })}
         </div>
-        <div className="flex w-11/12 m-auto mt-32 justify-evenly items-center">
+       {options.plNumber === 1 ? <div className="flex w-11/12 m-auto mt-32 justify-evenly items-center">
             <div className=" w-36 h-16 bg-timerMoves rounded-lg grid justify-evenly items-center text-center">
                 <p className="text-lg font-bold leading-5 text-center text-menuColor">Time</p>
                 <p className="text-3xl font-bold leading-7 text-center text-memoryColor">{minutes}:{seconds}</p>
@@ -102,7 +102,7 @@ function Game() {
                 <p className="text-lg font-bold leading-5 text-center text-menuColor">Moves</p>
                 <p className="text-3xl font-bold leading-7 text-center text-memoryColor">{moves}</p>
             </div>
-        </div>
+        </div> : null}
         </>
     )
 }
