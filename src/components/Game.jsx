@@ -12,6 +12,8 @@ function Game({options}) {
         playerFour:0
     })
 
+    const [scoreOrder, setScoreOrder] = useState(1)
+
     const shuffleNumbers = () => {
         const shuffledNumbers = [...numbers];
         for (let i = shuffledNumbers.length - 1; i > 0; i--) {
@@ -23,7 +25,8 @@ function Game({options}) {
 
     useEffect(() => {
         document.body.style.backgroundColor = "white"
-       console.log(numbers);
+       
+
        shuffleNumbers()
     }, [])
 
@@ -69,11 +72,13 @@ function Game({options}) {
 
                     e.target.style.color = "white"
                     
+                    console.log(scoreOrder);
+                    
                     if(firstClick === null) {
                         setFirstClick(e.target.textContent)
                         setFirstClickElement(e.target)
-                        console.log(firstClick)
-                        console.log(firstClickElement)
+                       
+                       
                         e.target.style.pointerEvents = "none"
                     } else {
                         if(e.target.textContent === firstClick) {
@@ -82,6 +87,55 @@ function Game({options}) {
                             e.target.style.pointerEvents = "none"
                             firstClickElement.style.pointerEvents = "none"
                             setMoves(moves - 1)
+                            if(options.plNumber === 2) {
+                                setScoreOrder(scoreOrder + 1)
+                                if(scoreOrder === 2) {
+                                    setScoreOrder(1)
+                                }
+                            } 
+
+                            if(options.plNumber === 3) {
+                                setScoreOrder(scoreOrder + 1)
+                                if(scoreOrder === 3) {
+                                    setScoreOrder(1)
+                                }
+                            } 
+
+                            if(options.plNumber === 4) {
+                                setScoreOrder(scoreOrder + 1)
+                                if(scoreOrder === 4) {
+                                    setScoreOrder(1)
+                                }
+                            } 
+
+                            if(scoreOrder === 1) {
+                                setPlayerScore(prevState => {
+                                   return{ ...prevState,
+                                    playerOne: playerScore.playerOne + 1
+                            }})
+                            } else if(scoreOrder === 2) {
+                                setPlayerScore(prevState => {
+                                    return{
+                                        ...prevState,
+                                        playerTwo: playerScore.playerTwo + 1
+                                    }
+                                })
+                            } else if(scoreOrder === 3) {
+                                setPlayerScore(prevState => {
+                                    return{
+                                        ...prevState,
+                                        playerThree: playerScore.playerThree + 1
+                                    }
+                                })
+                            } else if(scoreOrder === 4) {
+                                setPlayerScore(prevState => {
+                                    return{
+                                        ...prevState,
+                                        playerFour: playerScore.playerFour + 1
+                                    }
+                                })
+                            }
+                           
                         } else {
                             timeOut = setTimeout(() => {
                                 e.target.style.color = "transparent"
@@ -90,9 +144,28 @@ function Game({options}) {
                                 firstClickElement.style.pointerEvents = "auto"
                             }, 1000);
                             setMoves(moves - 1)
+                            
                         }
                         setFirstClick(null)
                         setFirstClickElement(null)
+                        if(options.plNumber === 2) {
+                            setScoreOrder(scoreOrder + 1)
+                            if(scoreOrder === 2) {
+                                setScoreOrder(1)
+                            }
+                        } 
+                        if(options.plNumber === 3) {
+                            setScoreOrder(scoreOrder + 1)
+                            if(scoreOrder === 3) {
+                                setScoreOrder(1)
+                            }
+                        } 
+                        if(options.plNumber === 4) {
+                            setScoreOrder(scoreOrder + 1)
+                            if(scoreOrder === 4) {
+                                setScoreOrder(1)
+                            }
+                        } 
                     }
                 
                 }}>{number}</div>
@@ -110,10 +183,10 @@ function Game({options}) {
             </div>
         </div> : 
         <div className="flex justify-center items-center mt-16   w-11/12 gap-7 m-auto">
-        <div className=" rounded-lg text-center  w-20 h-20 grid gap-1 justify-center items-center bg-timerMoves"><p className=" text-menuColor ">P1</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerOne}</p></div>
-        <div className="rounded-lg bg-timerMoves text-center  w-20 h-20 grid gap-1 justify-center items-center"><p className=" text-menuColor">P2</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerTwo}</p></div>
-        {options.plNumber === 3 || options.plNumber === 4 ? <div className="rounded-lg bg-timerMoves text-center  w-20 h-20 grid gap-1 justify-center items-center"><p className=" text-menuColor">P3</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerThree}</p></div> : null}
-        {options.plNumber===4 ? <div className="rounded-lg bg-timerMoves text-center  w-20 h-20 grid gap-1 justify-center items-center "><p className=" text-menuColor">P4</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerFour}</p></div> : null}
+        <div className={` rounded-lg text-center  w-20 h-20 grid gap-1 justify-center items-center ${scoreOrder === 1 ? ' bg-startButton' : 'bg-timerMoves'} `}><p className=" text-menuColor ">P1</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerOne}</p></div>
+        <div className={`rounded-lg  text-center  w-20 h-20 grid gap-1 justify-center items-center ${scoreOrder === 2 ? ' bg-startButton' : 'bg-timerMoves'} `}><p className=" text-menuColor">P2</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerTwo}</p></div>
+        {options.plNumber === 3 || options.plNumber === 4 ? <div className={`rounded-lg  text-center  w-20 h-20 grid gap-1 justify-center items-center ${scoreOrder === 3 ? ' bg-startButton' : 'bg-timerMoves'}`}><p className=" text-menuColor">P3</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerThree}</p></div> : null}
+        {options.plNumber===4 ? <div className={`rounded-lg  text-center  w-20 h-20 grid gap-1 justify-center items-center ${scoreOrder === 4 ? ' bg-startButton' : 'bg-timerMoves'}`}><p className=" text-menuColor">P4</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerFour}</p></div> : null}
         </div>}
         </>
     )
