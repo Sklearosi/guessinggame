@@ -5,6 +5,12 @@ import { Link } from "react-router-dom"
 function Game({options}) {
 
     const [numbers, setNumbers] = useState(options.size==="4x4" ? [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8] : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18] )
+    const [playerScore, setPlayerScore] = useState({
+        playerOne: 0,
+        playerTwo:0,
+        playerThree:0,
+        playerFour:0
+    })
 
     const shuffleNumbers = () => {
         const shuffledNumbers = [...numbers];
@@ -56,10 +62,10 @@ function Game({options}) {
             <p className="font-atkinson text-3xl font-bold leading-7 tracking-normal text-left text-memoryColor">memory</p>
             <Link className=" font-bold leading-5 tracking-normal text-center w-20 h-10 bg-menuColor flex justify-center items-center rounded-3xl text-white">Menu</Link>
         </div>
-        <div className={` grid grid-cols-4 w-11/12 m-auto mt-36 gap-3 ${options.size === '6x6' ? 'grid-cols-6' : null}`}>
+        <div className={` pl-3 grid grid-cols-4 w-11/12 m-auto mt-28 gap-3  ${options.size === '6x6' ? 'grid-cols-6 pl-0' : null}`}>
            {numbers.map((number, index) => {
             return(
-                <div  className={` font-bold leading-10 text-center bg-bgForRadio rounded-full w-16 h-16 flex justify-center  items-center text-transparent ${options.size ==="6x6" ? 'w-11 h-11 text-2xl' : 'text-4xl'} `} key={index}  onClick={(e) => {
+                <div  className={` font-bold leading-10 text-center bg-bgForRadio rounded-full w-16 h-16 flex justify-center  items-center text-transparent ${options.size ==="6x6" ? ' w-smallCircle h-smallCircle text-2xl' : 'text-4xl'} `} key={index}  onClick={(e) => {
 
                     e.target.style.color = "white"
                     
@@ -102,7 +108,13 @@ function Game({options}) {
                 <p className="text-lg font-bold leading-5 text-center text-menuColor">Moves</p>
                 <p className="text-3xl font-bold leading-7 text-center text-memoryColor">{moves}</p>
             </div>
-        </div> : null}
+        </div> : 
+        <div className="flex justify-center items-center mt-16   w-11/12 gap-7 m-auto">
+        <div className=" rounded-lg text-center  w-20 h-20 grid gap-1 justify-center items-center bg-timerMoves"><p className=" text-menuColor ">P1</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerOne}</p></div>
+        <div className="rounded-lg bg-timerMoves text-center  w-20 h-20 grid gap-1 justify-center items-center"><p className=" text-menuColor">P2</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerTwo}</p></div>
+        {options.plNumber === 3 || options.plNumber === 4 ? <div className="rounded-lg bg-timerMoves text-center  w-20 h-20 grid gap-1 justify-center items-center"><p className=" text-menuColor">P3</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerThree}</p></div> : null}
+        {options.plNumber===4 ? <div className="rounded-lg bg-timerMoves text-center  w-20 h-20 grid gap-1 justify-center items-center "><p className=" text-menuColor">P4</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerFour}</p></div> : null}
+        </div>}
         </>
     )
 }

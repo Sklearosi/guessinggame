@@ -14,7 +14,14 @@ export default {
       },
       colors: {
         menuColor: "#7191A5",
-        memoryColor: "#152938"
+        memoryColor: "#152938",
+        scoreColor:  "#304859"
+      },
+      width : {
+        smallCircle: "46px"
+      },
+      height : {
+        smallCircle: "46px"
       }
     },
   },
