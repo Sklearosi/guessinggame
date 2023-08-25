@@ -13,6 +13,7 @@ function Game({options}) {
     })
 
     const [scoreOrder, setScoreOrder] = useState(1)
+    const [revealed, setRevealed] = useState(0)
 
     const shuffleNumbers = () => {
         const shuffledNumbers = [...numbers];
@@ -25,19 +26,20 @@ function Game({options}) {
 
     useEffect(() => {
         document.body.style.backgroundColor = "white"
-       
-
+      
+        
        shuffleNumbers()
     }, [])
 
   
-
+    
 
     const [firstClick, setFirstClick] = useState(null)
     const [firstClickElement, setFirstClickElement] = useState(null)
     const [minutes, setMinutes] = useState(2)
     const [seconds, setSeconds] = useState(59)
     const [moves, setMoves] = useState(50)
+    const [endGame, setEndGame] = useState(true)
     let timer
     useEffect(() => {
         timer = setInterval(() => {
@@ -60,8 +62,9 @@ function Game({options}) {
     let timeOut
 
     return(
-        <>
-        <div className=" flex m-auto w-11/12 mt-4 justify-between items-center">
+        <div className={` w-full h-full bg-red-400 `}>
+            <div className={`${endGame ? 'absolute inset-0 filter blur-lg':null}`}>
+        <div className="  flex m-auto w-11/12 pt-4 justify-between items-center">
             <p className="font-atkinson text-3xl font-bold leading-7 tracking-normal text-left text-memoryColor">memory</p>
             <Link className=" font-bold leading-5 tracking-normal text-center w-20 h-10 bg-menuColor flex justify-center items-center rounded-3xl text-white">Menu</Link>
         </div>
@@ -82,6 +85,7 @@ function Game({options}) {
                         e.target.style.pointerEvents = "none"
                     } else {
                         if(e.target.textContent === firstClick) {
+                            setRevealed(revealed + 1)
                             e.target.style.backgroundColor = "#BCCED9"
                             firstClickElement.style.backgroundColor = "#BCCED9"
                             e.target.style.pointerEvents = "none"
@@ -135,7 +139,11 @@ function Game({options}) {
                                     }
                                 })
                             }
-                           
+
+                            if(revealed === 7 && options.plNumber === 2) {
+                               
+                            }
+                          
                         } else {
                             timeOut = setTimeout(() => {
                                 e.target.style.color = "transparent"
@@ -188,7 +196,19 @@ function Game({options}) {
         {options.plNumber === 3 || options.plNumber === 4 ? <div className={`rounded-lg  text-center  w-20 h-20 grid gap-1 justify-center items-center ${scoreOrder === 3 ? ' bg-startButton' : 'bg-timerMoves'}`}><p className=" text-menuColor">P3</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerThree}</p></div> : null}
         {options.plNumber===4 ? <div className={`rounded-lg  text-center  w-20 h-20 grid gap-1 justify-center items-center ${scoreOrder === 4 ? ' bg-startButton' : 'bg-timerMoves'}`}><p className=" text-menuColor">P4</p><p className=" text-scoreColor text-2xl font-bold leading-7 text-center">{playerScore.playerFour}</p></div> : null}
         </div>}
-        </>
+        </div>
+        {endGame ? 
+        <div className="  bg-white  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pt-10 pb-10 w-11/12 m-auto grid text-center items-center content-center rounded-xl">
+            <h1 className="text-24 font-bold leading-30 tracking-normal text-center text-memoryColor">Player 3 Wins!</h1>
+            <p className=" text-14 font-bold leading-17 tracking-normal text-center text-menuColor mt-6">Game over! Here are the results</p>
+            <div></div>
+            <div></div>
+            <button></button>
+            <button></button>
+        </div> 
+        : 
+        null}
+        </div>
     )
 }
 
