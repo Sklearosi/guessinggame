@@ -5,18 +5,17 @@ import { useEffect } from "react";
 
 function Home({setOptions, options}) {
    
-    
-  console.log(options);
+  
 
    
 
  
 
   return (
-    <div className='bg-red-300 w-full h-full pt-20'>
+    <div className=' bg-winnerBg w-full h-full pt-20'>
       <p className="  text-4xl font-bold leading-10 tracking-normal text-center text-white">memory</p>
-      <div className=" w-11/12 m-auto mt-6 bg-white rounded-xl pb-9">
-        <div>
+      <div className=" w-11/12 m-auto mt-6 bg-white rounded-xl pb-9  xl:w-desktop">
+        <div className=" w-11/12 m-auto">
           <div className=" grid w-11/12 m-auto justify-center pt-5">
           <p className=" mb-4 ml-1 text-menuColor font-bold text-base leading-5 tracking-normal text-left">Select Theme</p>
           <div  className=" flex justify-center items-center gap-3">
